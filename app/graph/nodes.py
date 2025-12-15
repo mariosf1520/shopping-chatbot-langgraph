@@ -23,6 +23,8 @@ def menu_node(state):
         return "REMOVE_ITEM"
     elif "modificar" in message:
         return "UPDATE_ITEM"
+    elif "finalizar" in message or "comprar" in message:
+        return "CONFIRM_PURCHASE"
     else:
         print("🤖 No he entendido el mensaje")
         return "MENU"
@@ -63,7 +65,32 @@ def update_item_node(state):
         print("🤖 Entrada inválida")
     return "MENU"
 
-def end_node(state):
+def confirm_purchase_node(state):
+    if state.cart.items == []:
+        print("🤖 Tu carrito está vacío. No puedes finalizar la compra.")
+        return "MENU"
+
+    print("🤖 Estás a punto de finalizar la compra.")
+    print(state.cart.show_cart())
+    confirm = input("¿Confirmas la compra? (si/no): ").lower()
+
+    if confirm == "si":
+        return "COLLECT_USER_DATA"
+    else:
+        print("🤖 Compra cancelada.")
+        return "MENU"
+
+def collect_user_data_node(state):
+    state.user_name = input("Introduce tu nombre: ")
+    state.city = input("Introduce tu ciudad: ")
+
+    print("🤖 Compra confirmada 🎉")
+    print(f"Nombre: {state.user_name}")
+    print(f"Ciudad: {state.city}")
     print("🤖 Gracias por tu compra. ¡Hasta pronto!")
+
     return None
 
+def end_node(state):
+    print("🤖 Gracias por tu visita. ¡Hasta pronto!")
+    return None
