@@ -36,3 +36,20 @@ class Cart:
 
         message += f"Total: {total:.2f}€"
         return message
+    def remove_item(self, product_id):
+        for item in self.items:
+            if item["id"] == product_id:
+                self.items.remove(item)
+                return "Producto eliminado del carrito"
+        return "El producto no está en el carrito"
+
+    def update_quantity(self, product_id, quantity):
+        if quantity <= 0:
+            return "Cantidad inválida"
+
+        for item in self.items:
+            if item["id"] == product_id:
+                item["quantity"] = quantity
+                return "Cantidad actualizada"
+        return "El producto no está en el carrito"
+

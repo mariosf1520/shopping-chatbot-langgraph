@@ -19,6 +19,10 @@ def menu_node(state):
         return "ADD_TO_CART"
     elif "carrito" in message:
         return "SHOW_CART"
+    elif "eliminar" in message:
+        return "REMOVE_ITEM"
+    elif "modificar" in message:
+        return "UPDATE_ITEM"
     else:
         print("🤖 No he entendido el mensaje")
         return "MENU"
@@ -36,13 +40,30 @@ def add_to_cart_node(state):
             print("🤖", state.cart.add_item(product, quantity))
     except ValueError:
         print("🤖 Entrada inválida")
-
     return "MENU"
 
 def show_cart_node(state):
     print(state.cart.show_cart())
     return "MENU"
 
+def remove_item_node(state):
+    try:
+        product_id = int(input("ID del producto a eliminar: "))
+        print("🤖", state.cart.remove_item(product_id))
+    except ValueError:
+        print("🤖 Entrada inválida")
+    return "MENU"
+
+def update_item_node(state):
+    try:
+        product_id = int(input("ID del producto: "))
+        quantity = int(input("Nueva cantidad: "))
+        print("🤖", state.cart.update_quantity(product_id, quantity))
+    except ValueError:
+        print("🤖 Entrada inválida")
+    return "MENU"
+
 def end_node(state):
     print("🤖 Gracias por tu compra. ¡Hasta pronto!")
     return None
+
