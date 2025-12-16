@@ -4,3 +4,6 @@ class ChatState:
     def __init__(self):
         self.cart = Cart()
         self.last_message = ""
+        self.user_name = None
+        self.city = None
+
